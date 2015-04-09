@@ -7,6 +7,7 @@ var express = require('express');
 var routes = require('./routes');
 var http = require('http');
 var path = require('path');
+var xml = require('xml');
 
 var app = express();
 var client = require('twilio')('AC9f6f074a667db5b4dcc4d266b13137c2', '4ad97748c64ed6b6af5d9ac9c5e9d1f1');
@@ -45,8 +46,10 @@ app.get('/twilio', function(req, res){
 	});
 });
 
-app.post('/twilio/reply', function(req, res, next){
-
+app.get('/twilio/reply', function(req, res, next){
+	var XMLString = [{ Response : [{ Message: 'Hey There, Thanks for the reply' }] }];
+	res.set('Content-Type', 'text/xml');
+	res.send(xml(XMLString));
 });
 
 http.createServer(app).listen(app.get('port'), function(){
