@@ -47,7 +47,7 @@ app.get('/twilio', function(req, res){
 });
 
 app.get('/twilio/reply', function(req, res, next){
-	var XMLString = [{ Response : [{ Message: 'Hey There, Thanks for the reply' }] }];
+	var XMLString = [{ Response : [{ Message: 'Hey There, Thanks for the reply' + req.Body }] }];
 	res.set('Content-Type', 'text/xml');
 	res.send(xml(XMLString));
 });
