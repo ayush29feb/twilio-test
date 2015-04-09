@@ -31,10 +31,12 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 
 var router = app.Router();
-// router.route('/sms')
-// 	.post(function(req, res) {
-		
-// 	})
+router.route('/sms')
+	.post(function(req, res) {
+		res.send({
+			message: 'Route Works'
+		});
+	});
 
 
 app.use('/twilio', router);
