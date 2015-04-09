@@ -9,6 +9,7 @@ var http = require('http');
 var path = require('path');
 
 var app = express();
+var client = require('twilio')('AC9f6f074a667db5b4dcc4d266b13137c2', '4ad97748c64ed6b6af5d9ac9c5e9d1f1');
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -28,8 +29,25 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/twilio', function(req, res){
-	res.send({ message: 'works' });
-})
+	client.sendMessage({
+	    to:'+12063932864', // Any number Twilio can deliver to
+	    from: '+12532184206', // A number you bought from Twilio and can use for outbound communication
+	    body: 'Okay. Thats good' // body of the SMS message
+	}, function(err, responseData) { //this function is executed when a response is received from Twilio
+	    if (!err) { // "err" is an error received during the request, if any
+	        // "responseData" is a JavaScript object containing data received from Twilio.
+	        // A sample response from sending an SMS message is here (click "JSON" to see how the data appears in JavaScript):
+	        // http://www.twilio.com/docs/api/rest/sending-sms#example-1
+	        res.send({from : responseData.from, body : responseData.body });
+	    } else {
+	    	res.send({message : 'failed'});
+	    }
+	});
+});
+
+app.post('/twilio/reply', function(req, res, next){
+
+});
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
