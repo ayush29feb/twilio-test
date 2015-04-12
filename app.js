@@ -11,6 +11,7 @@ var xml = require('xml');
 
 var app = express();
 var client = require('twilio')('AC9f6f074a667db5b4dcc4d266b13137c2', '4ad97748c64ed6b6af5d9ac9c5e9d1f1');
+var twilio = require('twilio');
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -46,9 +47,8 @@ app.get('/twilio', function(req, res){
 	});
 });
 
-app.get('/twilio/reply', function(req, res, next){
+app.post('/twilio/reply', function(req, res, next){
 	var resp = new twilio.TwimlResponse();
-
 	resp.say({voice:'woman'}, 'ahoy hoy! Testing Twilio and node.js');
 	res.writeHead(200, {
 		'Content-Type':'text/xml'
