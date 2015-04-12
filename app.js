@@ -47,9 +47,14 @@ app.get('/twilio', function(req, res){
 });
 
 app.get('/twilio/reply', function(req, res, next){
-	var XMLString = [{ Response : [{ Message: 'Hey There, Thanks for the reply' + req.Body }] }];
-	res.set('Content-Type', 'text/xml');
-	res.send(xml(XMLString));
+	var resp = new twilio.TwimlResponse();
+
+	resp.say({voice:'woman'}, 'ahoy hoy! Testing Twilio and node.js');
+	res.writeHead(200, {
+	res.writeHead(200, {
+		'Content-Type':'text/xml'
+	});
+	res.end(resp.toString());
 });
 
 http.createServer(app).listen(app.get('port'), function(){
