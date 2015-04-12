@@ -49,7 +49,7 @@ app.get('/twilio', function(req, res){
 
 app.post('/twilio/reply', function(req, res, next){
 	var resp = new twilio.TwimlResponse();
-	resp.sms(req + ' Hey');
+	resp.sms(req.param('Body') + ' Hey');
 	res.writeHead(200, {
 		'Content-Type':'text/xml'
 	});
