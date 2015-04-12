@@ -51,7 +51,6 @@ app.get('/twilio/reply', function(req, res, next){
 
 	resp.say({voice:'woman'}, 'ahoy hoy! Testing Twilio and node.js');
 	res.writeHead(200, {
-	res.writeHead(200, {
 		'Content-Type':'text/xml'
 	});
 	res.end(resp.toString());
